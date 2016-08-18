@@ -14,8 +14,10 @@ import bleualign.score as bleu
 from bleualign.utils import evaluate, finalevaluation
 import io
 
+import bilingualcoverage
 
-if sys.version_info >= (2,6):
+if False and sys.version_info >= (2,6):
+  # sorry, didn't implement multiprocessing support for coverage-based scoring
   import multiprocessing
   multiprocessing_enabled = 1
   number_of_threads = 4
@@ -106,7 +108,10 @@ class Aligner:
         #gapfillheuristics: what to do with sentences that aren't aligned one-to-one by the first BLEU pass, nor have a 1 to N alignment validated by BLEU?
         #possible members are: bleu1to1, galechurch
         #what they do is commented in the source code
-        'gapfillheuristics' : ["bleu1to1","galechurch"],
+        'gapfillheuristics' : ["galechurch"],  # ["bleu1to1","galechurch"],
+
+        # use the new phrase-table-based score
+        'coverage': None,
 
         #defines string that identifies hard boundaries (articles, chapters etc.)
         #string needs to be on a line of its own (see examples in eval directory)
@@ -153,7 +158,7 @@ class Aligner:
         raise ValueError('Target file not specified.')
       if not self.options['srctotarget'] and not self.options['targettosrc']\
             and not self.options['no_translation_override']:
-        raise ValueError("ERROR: no translation available: BLEU scores can be computed between the source and target text, but this is not the intended usage of Bleualign and may result in poor performance! If you're *really* sure that this is what you want, set 'galechurch' for the options.")
+        raise ValueError("ERROR: no translation available: BLEU scores can be computed between the source and target text, but this is not the intended usage of Bleualign and may result in poor performance! If you're *really* sure that this is what you want, set 'no_translation_override' for the options.")
 
       self.src, self.close_src = \
             self._inputObjectFromParameter(self.options['srcfile'])
@@ -181,6 +186,17 @@ class Aligner:
             self.options['output-src-bad'], self.options['output'], '-bad-s')
         self.out_bad2,self.close_out_bad2=self._outputObjectFromParameter(
             self.options['output-target-bad'], self.options['output'], '-bad-t')
+
+      if self.options['coverage']:
+        coverage_options = dict()
+        for k_v in self.options['coverage'].split():
+          assert "=" in k_v, "Invalid coverage options: " + k_v
+          k, _, v = k_v.partition("=")
+          coverage_options[k] = v
+        self.coverage = bilingualcoverage.BilingualCoverage(
+            coverage_options["table"],
+            coverage_options["langs"].split("-")
+        )
 
     # for passing by string array
     def _stringArray2stringIo(self, stringArray):
@@ -301,6 +317,8 @@ class Aligner:
         self.out2.flush()
 
       if self.options['eval']:
+        if self.options['coverage']:
+          self.log(str(self.coverage), 1)
         finalevaluation(results, self.log)
 
       if self.options['filter']:
@@ -401,7 +419,7 @@ class Aligner:
         return self.multialign
 
       else:
-        self.log('Evaluating sentences with bleu',1)
+        self.log('Evaluating sentences (first pass)',1)
         self.scoredict = self.eval_sents(translist,targetlist)
         self.log('finished',1)
         self.log('searching for longest path of good alignments',1)
@@ -431,10 +449,23 @@ class Aligner:
       return scoredict
 
 
+    def eval_sents_coverage(self,translist,targetlist):
+      scoredict = {}
+      for testID,testSent in enumerate(translist):
+        scorelist = []
+        for refID,refSent in enumerate(targetlist):
+          n = len(testSent)
+          m = len(refSent)
+          score = self.coverage.score(testSent, refSent)
+          if score > 0:
+            scorelist.append((score,refID,score))
+        scoredict[testID] = sorted(scorelist,key=itemgetter(0),reverse=True)[:self.options['maxalternatives']]
+      return scoredict
+
+
     # given list of test sentences and list of reference sentences, calculate bleu scores
     #if you want to replace bleu with your own similarity measure, use eval_sents_dummy
-    def eval_sents(self,translist,targetlist):
-      
+    def eval_sents_bleu(self,translist,targetlist):
       scoredict = {}
       cooked_test = {}
       cooked_test2 = {}
@@ -496,6 +527,13 @@ class Aligner:
         scoredict[testID] = sorted(scorelist,key=itemgetter(0),reverse=True)[:self.options['maxalternatives']]
         
       return scoredict
+
+
+    def eval_sents(self,translist,targetlist):
+        if self.options['coverage']:
+            return self.eval_sents_coverage(translist,targetlist)
+        else:
+            return self.eval_sents_bleu(translist,targetlist)
 
 
     #follow the backpointers in score matrix to extract best path of 1-to-1 alignments
@@ -679,7 +717,7 @@ class Aligner:
           if pregapsrc:
             oldscore,oldtarget,oldcorrect = scoredict[pregapsrc][0]
             combinedID = tuple(list(pregapsrc)+[sourcegap[0]])
-            if combinedID in scoredict:
+            if combinedID in scoredict and len(scoredict[combinedID]): # bugfix: scoredict[combinedID] may be empty
                 newscore,newtarget,newcorrect = scoredict[combinedID][0]
 
                 if newscore > oldscore and newcorrect > oldcorrect and newtarget == pregaptarget:
@@ -692,7 +730,7 @@ class Aligner:
           if postgapsrc:
             oldscore,oldtarget,oldcorrect = scoredict[postgapsrc][0]
             combinedID = tuple([sourcegap[-1]] + list(postgapsrc))
-            if combinedID in scoredict:
+            if combinedID in scoredict and len(scoredict[combinedID]): # bugfix: scoredict[combinedID] may be empty
                 newscore,newtarget, newcorrect = scoredict[combinedID][0]
                 if newscore > oldscore  and newcorrect > oldcorrect and newtarget == postgaptarget:
                     #print('\nsource side: ' + str(combinedID) + ' better than ' + str(postgapsrc))
@@ -968,6 +1006,7 @@ class Aligner:
             self.out_bad2.write(target_out + '\n')
           else:
             if sentscore > 0:
+              # compute the harmonic mean of BLEU scores in both directions:
               sentscorex = self.score_article([target],[trans])
               newsentscore = (2*sentscore*sentscorex)/(sentscore+sentscorex)
             else:

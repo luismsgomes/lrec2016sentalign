@@ -1,0 +1,247 @@
+WARNING: Output not specified. Just printing debugging output. 0
+reading in article 0: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 0
+
+gold alignment frequencies
+
+(1, 1) - 75 (0.5859375)
+(0, 1) - 17 (0.1328125)
+(1, 2) - 13 (0.1015625)
+(2, 1) - 10 (0.078125)
+(3, 1) - 5 (0.0390625)
+(2, 2) - 4 (0.03125)
+(1, 4) - 2 (0.015625)
+(1, 3) - 1 (0.0078125)
+(1, 0) - 1 (0.0078125)
+
+total recall: 128 pairs in gold
+recall strict: 
+0.5545454545454546
+recall lax: 
+0.6727272727272727
+
+precision for alignment type GALECHURCH ( 119 alignment pairs)
+precision strict: 0.5126050420168067
+precision lax: 0.6218487394957983
+
+total precision:119 alignment pairs found
+precision strict: 0.5126050420168067
+precision lax: 0.6218487394957983
+reading in article 1: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 1
+
+gold alignment frequencies
+
+(1, 1) - 193 (0.7201492537313433)
+(2, 1) - 39 (0.1455223880597015)
+(0, 1) - 23 (0.08582089552238806)
+(1, 2) - 5 (0.018656716417910446)
+(3, 1) - 4 (0.014925373134328358)
+(1, 0) - 2 (0.007462686567164179)
+(1, 3) - 1 (0.0037313432835820895)
+(2, 2) - 1 (0.0037313432835820895)
+
+total recall: 268 pairs in gold
+recall strict: 
+0.588477366255144
+recall lax: 
+0.7037037037037037
+
+precision for alignment type GALECHURCH ( 240 alignment pairs)
+precision strict: 0.5958333333333333
+precision lax: 0.7125
+
+total precision:240 alignment pairs found
+precision strict: 0.5958333333333333
+precision lax: 0.7125
+reading in article 2: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 2
+
+gold alignment frequencies
+
+(1, 1) - 72 (0.8089887640449438)
+(1, 2) - 5 (0.056179775280898875)
+(2, 2) - 3 (0.033707865168539325)
+(2, 1) - 3 (0.033707865168539325)
+(0, 1) - 2 (0.02247191011235955)
+(1, 3) - 2 (0.02247191011235955)
+(1, 0) - 1 (0.011235955056179775)
+(3, 1) - 1 (0.011235955056179775)
+
+total recall: 89 pairs in gold
+recall strict: 
+0.813953488372093
+recall lax: 
+0.9767441860465116
+
+precision for alignment type GALECHURCH ( 87 alignment pairs)
+precision strict: 0.8045977011494253
+precision lax: 0.9540229885057471
+
+total precision:87 alignment pairs found
+precision strict: 0.8045977011494253
+precision lax: 0.9540229885057471
+reading in article 3: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 3
+
+gold alignment frequencies
+
+(1, 1) - 83 (0.8137254901960784)
+(1, 2) - 8 (0.0784313725490196)
+(2, 1) - 6 (0.058823529411764705)
+(0, 1) - 2 (0.0196078431372549)
+(1, 3) - 1 (0.00980392156862745)
+(2, 2) - 1 (0.00980392156862745)
+(1, 0) - 1 (0.00980392156862745)
+
+total recall: 102 pairs in gold
+recall strict: 
+0.8484848484848485
+recall lax: 
+0.9292929292929293
+
+precision for alignment type GALECHURCH ( 98 alignment pairs)
+precision strict: 0.8571428571428571
+precision lax: 0.9489795918367347
+
+total precision:98 alignment pairs found
+precision strict: 0.8571428571428571
+precision lax: 0.9489795918367347
+reading in article 4: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 4
+
+gold alignment frequencies
+
+(1, 1) - 25 (0.7142857142857143)
+(1, 2) - 5 (0.14285714285714285)
+(2, 1) - 3 (0.08571428571428572)
+(0, 1) - 2 (0.05714285714285714)
+
+total recall: 35 pairs in gold
+recall strict: 
+0.5151515151515151
+recall lax: 
+0.7575757575757576
+
+precision for alignment type GALECHURCH ( 33 alignment pairs)
+precision strict: 0.5151515151515151
+precision lax: 0.7272727272727273
+
+total precision:33 alignment pairs found
+precision strict: 0.5151515151515151
+precision lax: 0.7272727272727273
+reading in article 5: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 5
+
+gold alignment frequencies
+
+(1, 1) - 97 (0.8220338983050848)
+(1, 2) - 11 (0.09322033898305085)
+(2, 1) - 7 (0.059322033898305086)
+(1, 3) - 1 (0.00847457627118644)
+(2, 2) - 1 (0.00847457627118644)
+(1, 0) - 1 (0.00847457627118644)
+
+total recall: 118 pairs in gold
+recall strict: 
+0.8632478632478633
+recall lax: 
+0.9487179487179487
+
+precision for alignment type GALECHURCH ( 117 alignment pairs)
+precision strict: 0.8632478632478633
+precision lax: 0.9401709401709402
+
+total precision:117 alignment pairs found
+precision strict: 0.8632478632478633
+precision lax: 0.9401709401709402
+reading in article 6: 
+processing
+computing alignment between srctotarget (file 0) and target text
+
+finished with article
+
+====================
+
+evaluation 6
+
+gold alignment frequencies
+
+(1, 1) - 133 (0.7556818181818182)
+(1, 2) - 16 (0.09090909090909091)
+(2, 1) - 14 (0.07954545454545454)
+(1, 0) - 5 (0.028409090909090908)
+(3, 2) - 2 (0.011363636363636364)
+(1, 3) - 2 (0.011363636363636364)
+(2, 2) - 2 (0.011363636363636364)
+(0, 1) - 1 (0.005681818181818182)
+(2, 3) - 1 (0.005681818181818182)
+
+total recall: 176 pairs in gold
+recall strict: 
+0.7941176470588235
+recall lax: 
+0.9117647058823529
+
+precision for alignment type GALECHURCH ( 174 alignment pairs)
+precision strict: 0.7758620689655172
+precision lax: 0.896551724137931
+
+total precision:174 alignment pairs found
+precision strict: 0.7758620689655172
+precision lax: 0.896551724137931
+
+=========================
+
+total results:
+recall strict: 0.7121212121212122
+recall lax: 0.8298368298368298
+
+precision strict: 0.7039170506912442
+precision lax: 0.8191244239631337
+
+f1 strict: 0.7079953650057937
+f1 lax: 0.8244458305579396
+

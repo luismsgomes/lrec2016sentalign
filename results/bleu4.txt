@@ -1,0 +1,331 @@
+WARNING: Output not specified. Just printing debugging output. 0
+reading in article 0: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 0
+
+gold alignment frequencies
+
+(1, 1) - 75 (0.5859375)
+(0, 1) - 17 (0.1328125)
+(1, 2) - 13 (0.1015625)
+(2, 1) - 10 (0.078125)
+(3, 1) - 5 (0.0390625)
+(2, 2) - 4 (0.03125)
+(1, 4) - 2 (0.015625)
+(1, 3) - 1 (0.0078125)
+(1, 0) - 1 (0.0078125)
+
+total recall: 128 pairs in gold
+recall strict: 
+0.5636363636363636
+recall lax: 
+0.7545454545454545
+
+precision for alignment type BLEU ( 25 alignment pairs)
+precision strict: 0.92
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 54 alignment pairs)
+precision strict: 0.6481481481481481
+precision lax: 0.7777777777777778
+precision for alignment type GAPFILLER ( 15 alignment pairs)
+precision strict: 0.26666666666666666
+precision lax: 1.0
+
+total precision:94 alignment pairs found
+precision strict: 0.6595744680851063
+precision lax: 0.8723404255319149
+reading in article 1: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 1
+
+gold alignment frequencies
+
+(1, 1) - 193 (0.7201492537313433)
+(2, 1) - 39 (0.1455223880597015)
+(0, 1) - 23 (0.08582089552238806)
+(1, 2) - 5 (0.018656716417910446)
+(3, 1) - 4 (0.014925373134328358)
+(1, 0) - 2 (0.007462686567164179)
+(1, 3) - 1 (0.0037313432835820895)
+(2, 2) - 1 (0.0037313432835820895)
+
+total recall: 268 pairs in gold
+recall strict: 
+0.7242798353909465
+recall lax: 
+0.8477366255144033
+
+precision for alignment type BLEU ( 51 alignment pairs)
+precision strict: 0.9607843137254902
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 158 alignment pairs)
+precision strict: 0.740506329113924
+precision lax: 0.8734177215189873
+precision for alignment type GAPFILLER ( 18 alignment pairs)
+precision strict: 0.5555555555555556
+precision lax: 1.0
+
+total precision:227 alignment pairs found
+precision strict: 0.775330396475771
+precision lax: 0.9118942731277533
+reading in article 2: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 2
+
+gold alignment frequencies
+
+(1, 1) - 72 (0.8089887640449438)
+(1, 2) - 5 (0.056179775280898875)
+(2, 2) - 3 (0.033707865168539325)
+(2, 1) - 3 (0.033707865168539325)
+(0, 1) - 2 (0.02247191011235955)
+(1, 3) - 2 (0.02247191011235955)
+(1, 0) - 1 (0.011235955056179775)
+(3, 1) - 1 (0.011235955056179775)
+
+total recall: 89 pairs in gold
+recall strict: 
+0.7325581395348837
+recall lax: 
+0.8488372093023255
+
+precision for alignment type BLEU ( 20 alignment pairs)
+precision strict: 0.95
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 54 alignment pairs)
+precision strict: 0.7777777777777778
+precision lax: 0.9444444444444444
+precision for alignment type GAPFILLER ( 4 alignment pairs)
+precision strict: 0.5
+precision lax: 0.75
+
+total precision:78 alignment pairs found
+precision strict: 0.8076923076923077
+precision lax: 0.9487179487179487
+reading in article 3: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 3
+
+gold alignment frequencies
+
+(1, 1) - 83 (0.8137254901960784)
+(1, 2) - 8 (0.0784313725490196)
+(2, 1) - 6 (0.058823529411764705)
+(0, 1) - 2 (0.0196078431372549)
+(1, 3) - 1 (0.00980392156862745)
+(2, 2) - 1 (0.00980392156862745)
+(1, 0) - 1 (0.00980392156862745)
+
+total recall: 102 pairs in gold
+recall strict: 
+0.8080808080808081
+recall lax: 
+0.8888888888888888
+
+precision for alignment type BLEU ( 11 alignment pairs)
+precision strict: 0.9090909090909091
+precision lax: 0.9090909090909091
+precision for alignment type GALECHURCH ( 83 alignment pairs)
+precision strict: 0.8313253012048193
+precision lax: 0.927710843373494
+precision for alignment type GAPFILLER ( 2 alignment pairs)
+precision strict: 0.5
+precision lax: 1.0
+
+total precision:96 alignment pairs found
+precision strict: 0.8333333333333334
+precision lax: 0.9270833333333334
+reading in article 4: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 4
+
+gold alignment frequencies
+
+(1, 1) - 25 (0.7142857142857143)
+(1, 2) - 5 (0.14285714285714285)
+(2, 1) - 3 (0.08571428571428572)
+(0, 1) - 2 (0.05714285714285714)
+
+total recall: 35 pairs in gold
+recall strict: 
+0.696969696969697
+recall lax: 
+0.8484848484848485
+
+precision for alignment type BLEU ( 9 alignment pairs)
+precision strict: 0.8888888888888888
+precision lax: 0.8888888888888888
+precision for alignment type GALECHURCH ( 18 alignment pairs)
+precision strict: 0.7222222222222222
+precision lax: 0.9444444444444444
+precision for alignment type GAPFILLER ( 3 alignment pairs)
+precision strict: 0.6666666666666666
+precision lax: 1.0
+
+total precision:30 alignment pairs found
+precision strict: 0.7666666666666667
+precision lax: 0.9333333333333333
+reading in article 5: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 5
+
+gold alignment frequencies
+
+(1, 1) - 97 (0.8220338983050848)
+(1, 2) - 11 (0.09322033898305085)
+(2, 1) - 7 (0.059322033898305086)
+(1, 3) - 1 (0.00847457627118644)
+(2, 2) - 1 (0.00847457627118644)
+(1, 0) - 1 (0.00847457627118644)
+
+total recall: 118 pairs in gold
+recall strict: 
+0.7350427350427351
+recall lax: 
+0.8290598290598291
+
+precision for alignment type BLEU ( 18 alignment pairs)
+precision strict: 1.0
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 82 alignment pairs)
+precision strict: 0.8170731707317073
+precision lax: 0.9024390243902439
+precision for alignment type GAPFILLER ( 5 alignment pairs)
+precision strict: 0.2
+precision lax: 0.8
+
+total precision:105 alignment pairs found
+precision strict: 0.819047619047619
+precision lax: 0.9142857142857143
+reading in article 6: 
+processing
+computing alignment between srctotarget (file 0) and target text
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 6
+
+gold alignment frequencies
+
+(1, 1) - 133 (0.7556818181818182)
+(1, 2) - 16 (0.09090909090909091)
+(2, 1) - 14 (0.07954545454545454)
+(1, 0) - 5 (0.028409090909090908)
+(3, 2) - 2 (0.011363636363636364)
+(1, 3) - 2 (0.011363636363636364)
+(2, 2) - 2 (0.011363636363636364)
+(0, 1) - 1 (0.005681818181818182)
+(2, 3) - 1 (0.005681818181818182)
+
+total recall: 176 pairs in gold
+recall strict: 
+0.7647058823529411
+recall lax: 
+0.8823529411764706
+
+precision for alignment type BLEU ( 40 alignment pairs)
+precision strict: 0.8
+precision lax: 0.975
+precision for alignment type GALECHURCH ( 120 alignment pairs)
+precision strict: 0.8
+precision lax: 0.9083333333333333
+precision for alignment type GAPFILLER ( 4 alignment pairs)
+precision strict: 0.5
+precision lax: 1.0
+
+total precision:164 alignment pairs found
+precision strict: 0.7926829268292683
+precision lax: 0.926829268292683
+
+=========================
+
+total results:
+recall strict: 0.7226107226107226
+recall lax: 0.844988344988345
+
+precision strict: 0.7808564231738035
+precision lax: 0.9168765743073047
+
+f1 strict: 0.7506053268765133
+f1 lax: 0.879465855296374
+

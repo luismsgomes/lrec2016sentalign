@@ -15,7 +15,8 @@ class TestGaleChurch(unittest.TestCase, Utils):
 		refer_dir = os.path.join(test_dir, 'refer')
 		bleualign.log = lambda a, b:None
 		compare_files = []
-		for test_set, test_argument in [('eval1957', '-d'), ('eval1989', '-e')]:
+		#for test_set, test_argument in [('eval1957', '-d'), ('eval1989', '-e')]:
+		for test_set, test_argument in [('eval1989', '-e')]:
 			options = load_arguments(['', test_argument, '--srctotarget', '-'])
 			output_file = test_set + '-galechurch'
 			output_path = os.path.join(result_dir , output_file)

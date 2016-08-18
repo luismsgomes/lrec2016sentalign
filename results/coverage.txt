@@ -1,0 +1,338 @@
+Loading phrase_tables/europarl-minfreq5-minscp0001.de-fr.xz
+Loaded 708735 entries; maxn1=11; maxn2=11
+reading in article 0: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 0
+
+gold alignment frequencies
+
+(1, 1) - 75 (0.5859375)
+(0, 1) - 17 (0.1328125)
+(1, 2) - 13 (0.1015625)
+(2, 1) - 10 (0.078125)
+(3, 1) - 5 (0.0390625)
+(2, 2) - 4 (0.03125)
+(1, 4) - 2 (0.015625)
+(1, 3) - 1 (0.0078125)
+(1, 0) - 1 (0.0078125)
+
+total recall: 128 pairs in gold
+recall strict: 
+0.7363636363636363
+recall lax: 
+0.9363636363636364
+
+precision for alignment type BLEU ( 79 alignment pairs)
+precision strict: 0.7974683544303798
+precision lax: 0.9746835443037974
+precision for alignment type GALECHURCH ( 7 alignment pairs)
+precision strict: 0.7142857142857143
+precision lax: 0.7142857142857143
+precision for alignment type GAPFILLER ( 21 alignment pairs)
+precision strict: 0.6190476190476191
+precision lax: 1.0
+
+total precision:107 alignment pairs found
+precision strict: 0.7570093457943925
+precision lax: 0.9626168224299065
+reading in article 1: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 1
+
+gold alignment frequencies
+
+(1, 1) - 193 (0.7201492537313433)
+(2, 1) - 39 (0.1455223880597015)
+(0, 1) - 23 (0.08582089552238806)
+(1, 2) - 5 (0.018656716417910446)
+(3, 1) - 4 (0.014925373134328358)
+(1, 0) - 2 (0.007462686567164179)
+(1, 3) - 1 (0.0037313432835820895)
+(2, 2) - 1 (0.0037313432835820895)
+
+total recall: 268 pairs in gold
+recall strict: 
+0.8847736625514403
+recall lax: 
+0.9711934156378601
+
+precision for alignment type BLEU ( 184 alignment pairs)
+precision strict: 0.9184782608695652
+precision lax: 0.9945652173913043
+precision for alignment type GALECHURCH ( 15 alignment pairs)
+precision strict: 0.9333333333333333
+precision lax: 0.9333333333333333
+precision for alignment type GAPFILLER ( 40 alignment pairs)
+precision strict: 0.8
+precision lax: 1.0
+
+total precision:239 alignment pairs found
+precision strict: 0.899581589958159
+precision lax: 0.9916317991631799
+reading in article 2: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 2
+
+gold alignment frequencies
+
+(1, 1) - 72 (0.8089887640449438)
+(1, 2) - 5 (0.056179775280898875)
+(2, 2) - 3 (0.033707865168539325)
+(2, 1) - 3 (0.033707865168539325)
+(0, 1) - 2 (0.02247191011235955)
+(1, 3) - 2 (0.02247191011235955)
+(1, 0) - 1 (0.011235955056179775)
+(3, 1) - 1 (0.011235955056179775)
+
+total recall: 89 pairs in gold
+recall strict: 
+0.9069767441860465
+recall lax: 
+1.0
+
+precision for alignment type BLEU ( 79 alignment pairs)
+precision strict: 0.8734177215189873
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 5 alignment pairs)
+precision strict: 0.6
+precision lax: 0.8
+precision for alignment type GAPFILLER ( 6 alignment pairs)
+precision strict: 1.0
+precision lax: 1.0
+
+total precision:90 alignment pairs found
+precision strict: 0.8666666666666667
+precision lax: 0.9888888888888889
+reading in article 3: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 3
+
+gold alignment frequencies
+
+(1, 1) - 83 (0.8137254901960784)
+(1, 2) - 8 (0.0784313725490196)
+(2, 1) - 6 (0.058823529411764705)
+(0, 1) - 2 (0.0196078431372549)
+(1, 3) - 1 (0.00980392156862745)
+(2, 2) - 1 (0.00980392156862745)
+(1, 0) - 1 (0.00980392156862745)
+
+total recall: 102 pairs in gold
+recall strict: 
+0.797979797979798
+recall lax: 
+0.9393939393939394
+
+precision for alignment type BLEU ( 71 alignment pairs)
+precision strict: 0.9154929577464789
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 13 alignment pairs)
+precision strict: 0.7692307692307693
+precision lax: 1.0
+precision for alignment type GAPFILLER ( 10 alignment pairs)
+precision strict: 0.4
+precision lax: 1.0
+
+total precision:94 alignment pairs found
+precision strict: 0.8404255319148937
+precision lax: 1.0
+reading in article 4: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 4
+
+gold alignment frequencies
+
+(1, 1) - 25 (0.7142857142857143)
+(1, 2) - 5 (0.14285714285714285)
+(2, 1) - 3 (0.08571428571428572)
+(0, 1) - 2 (0.05714285714285714)
+
+total recall: 35 pairs in gold
+recall strict: 
+0.9090909090909091
+recall lax: 
+1.0
+
+precision for alignment type BLEU ( 27 alignment pairs)
+precision strict: 0.8888888888888888
+precision lax: 1.0
+precision for alignment type GALECHURCH ( 1 alignment pairs)
+precision strict: 1.0
+precision lax: 1.0
+precision for alignment type GAPFILLER ( 5 alignment pairs)
+precision strict: 1.0
+precision lax: 1.0
+
+total precision:33 alignment pairs found
+precision strict: 0.9090909090909091
+precision lax: 1.0
+reading in article 5: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 5
+
+gold alignment frequencies
+
+(1, 1) - 97 (0.8220338983050848)
+(1, 2) - 11 (0.09322033898305085)
+(2, 1) - 7 (0.059322033898305086)
+(1, 3) - 1 (0.00847457627118644)
+(2, 2) - 1 (0.00847457627118644)
+(1, 0) - 1 (0.00847457627118644)
+
+total recall: 118 pairs in gold
+recall strict: 
+0.8717948717948718
+recall lax: 
+0.9743589743589743
+
+precision for alignment type BLEU ( 92 alignment pairs)
+precision strict: 0.8913043478260869
+precision lax: 0.9891304347826086
+precision for alignment type GALECHURCH ( 13 alignment pairs)
+precision strict: 0.8461538461538461
+precision lax: 0.9230769230769231
+precision for alignment type GAPFILLER ( 11 alignment pairs)
+precision strict: 0.8181818181818182
+precision lax: 1.0
+
+total precision:116 alignment pairs found
+precision strict: 0.8793103448275862
+precision lax: 0.9827586206896551
+reading in article 6: 
+processing
+Evaluating sentences (first pass)
+finished
+searching for longest path of good alignments
+finished
+filling gaps
+finished
+
+finished with article
+
+====================
+
+evaluation 6
+
+gold alignment frequencies
+
+(1, 1) - 133 (0.7556818181818182)
+(1, 2) - 16 (0.09090909090909091)
+(2, 1) - 14 (0.07954545454545454)
+(1, 0) - 5 (0.028409090909090908)
+(3, 2) - 2 (0.011363636363636364)
+(1, 3) - 2 (0.011363636363636364)
+(2, 2) - 2 (0.011363636363636364)
+(0, 1) - 1 (0.005681818181818182)
+(2, 3) - 1 (0.005681818181818182)
+
+total recall: 176 pairs in gold
+recall strict: 
+0.8
+recall lax: 
+0.9529411764705882
+
+precision for alignment type BLEU ( 135 alignment pairs)
+precision strict: 0.8444444444444444
+precision lax: 0.9925925925925926
+precision for alignment type GALECHURCH ( 16 alignment pairs)
+precision strict: 0.875
+precision lax: 1.0
+precision for alignment type GAPFILLER ( 16 alignment pairs)
+precision strict: 0.5
+precision lax: 1.0
+
+total precision:167 alignment pairs found
+precision strict: 0.8143712574850299
+precision lax: 0.9940119760479041
+BilingualCoverage(filename=phrase_tables/europarl-minfreq5-minscp0001.de-fr.xz, langs=['de', 'fr'])
+
+=========================
+
+total results:
+recall strict: 0.8403263403263403
+recall lax: 0.9638694638694638
+
+precision strict: 0.8522458628841607
+precision lax: 0.9881796690307328
+
+f1 strict: 0.846244131455399
+f1 lax: 0.9758731906304474
+
+scores_dist:
+0.0	25698	25698
+0.1	183247	157549
+0.2	184641	1394
+0.3	185100	459
+0.4	185263	163
+0.5	185308	45
+0.6	185332	24
+0.7	185352	20
+0.8	185359	7
+0.9	185361	2
+1.0	185381	20

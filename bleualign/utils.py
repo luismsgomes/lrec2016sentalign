@@ -33,7 +33,7 @@ def evaluate(options, testalign, goldalign, log_function):
     (tpstrict,fnstrict,tplax,fnlax) = recall((0,0),goldalign,[i[0] for i in testalign],log_function)
     results['recall'] = (tpstrict,fnstrict,tplax,fnlax)
 
-    for aligntype in set([i[1] for i in testalign]):
+    for aligntype in sorted(set([i[1] for i in testalign])): # bugfix: added sorted to ensure output is deterministic
         testalign_bytype = []
         for i in testalign:
             if i[1] == aligntype:
@@ -74,11 +74,8 @@ def precision(goldalign, testalign, log_function):
                 log_function('false positive: ',2)
                 log_function((src,target),2)
     if tpstrict+fpstrict > 0:
-        log_function('precision strict: ',end='')
-        log_function((tpstrict/float(tpstrict+fpstrict)))
-        log_function('precision lax: ',end='')
-        log_function((tplax/float(tplax+fplax)))
-        log_function('')
+        log_function('precision strict: '+str(tpstrict/float(tpstrict+fpstrict)))
+        log_function('precision lax: '+str(tplax/float(tplax+fplax)))
     else:
         log_function('nothing to find')
 
@@ -171,20 +168,14 @@ def finalevaluation(results, log_function):
 
     log_function('\n=========================\n')
     log_function('total results:')
-    log_function('recall strict: ',end='')
-    log_function(rstrict)
-    log_function('recall lax: ',end='')
-    log_function(rlax)
+    log_function('recall strict: '+str(rstrict))
+    log_function('recall lax: '+str(rlax))
     log_function('')
 
-    log_function('precision strict: ',end='')
-    log_function(pstrict)
-    log_function('precision lax: '),
-    log_function(plax)
+    log_function('precision strict: '+str(pstrict))
+    log_function('precision lax: '+str(plax))
     log_function('')
     
-    log_function('f1 strict: ',end='')
-    log_function(fstrict)
-    log_function('f1 lax: ',end='')
-    log_function(flax)
+    log_function('f1 strict: '+str(fstrict))
+    log_function('f1 lax: '+str(flax))
     log_function('')

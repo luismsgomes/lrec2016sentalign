@@ -39,6 +39,9 @@ def usage():
     print('\t\tFilters out sentences/articles for which BLEU score between source and target is higher than that between translation and target (usually means source and target are in same language). Only works if --filter is set.')
     print('\t' + bold +'--galechurch' + reset)
     print('\t\tAlign the bitext using Gale and Church\'s algorithm (without BLEU comparison).')
+    print('\t' + bold +'--coverage' + reset + ' "table=phrase_tables/table.en-fr.gz langs=en-fr"')
+    print('\t\tAlign the bitext using coverage-based scoring functions (described in doc/lrec2016_sentalign.pdf).')
+    print('\t\tNote that the argument to --coverage is a string with two key-value pairs (table and langs).')
     print('\t' + bold +'--printempty' + reset)
     print('\t\tAlso write unaligned sentences to file. By default, they are discarded.')
     print('\t' + bold +'--verbosity' + reset + ', ' + bold +'-v' + reset + ' int')
@@ -46,7 +49,7 @@ def usage():
 
 def load_arguments(sysargv):
     try:
-        opts, args = getopt.getopt(sysargv[1:], "def:ho:s:t:v:", ["factored", "filter=", "filterthreshold=", "filterlang", "printempty", "deveval","eval", "help", "galechurch", "output=", "source=", "target=", "srctotarget=", "targettosrc=", "verbosity="])
+        opts, args = getopt.getopt(sysargv[1:], "def:ho:s:t:v:", ["factored", "filter=", "filterthreshold=", "filterlang", "printempty", "deveval", "eval", "help", "galechurch", "output=", "source=", "target=", "srctotarget=", "targettosrc=", "verbosity=", "coverage=", "bleu_ngrams="])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(str(err)) # will print something like "option -a not recognized"
@@ -84,6 +87,10 @@ def load_arguments(sysargv):
             options['output'] = a
         elif o == "--factored":
             options['factored'] = True
+        elif o == "--bleu_ngrams":
+            options['bleu_ngrams'] = int(a)
+        elif o == "--coverage":
+            options['coverage'] = a
         elif o in ("-f", "--filter"):
             if a in ['sentences','articles']:
               options['filter'] = a
@@ -117,9 +124,11 @@ def load_arguments(sysargv):
             options['verbosity'] = int(a)
         else:
             assert False, "unhandled option"
+    if 'coverage' in options:
+        options['no_translation_override'] = True
 
-    if not options['output']:
-      print('WARNING: Output not specified. Just printing debugging output.',0)
+    if not options['output'] and 'eval' not in options:
+      print('WARNING: Output not specified. Just printing debugging output.', sys.stderr)
     if not options['srcfile']:
       print('\nERROR: Source file not specified.')
       usage()
@@ -132,7 +141,7 @@ def load_arguments(sysargv):
         print('\nWARNING: Only --targettosrc specified, but expecting at least one --srctotarget. Please swap source and target side.')
         sys.exit(2)
     if not options['srctotarget'] and not options['targettosrc']\
-          and 'no_translation_override' not in options:
+          and 'no_translation_override' not in options and 'coverage' not in options:
         print("ERROR: no translation available: BLEU scores can be computed between the source and target text, but this is not the intended usage of Bleualign and may result in poor performance! If you're *really* sure that this is what you want, use the option '--srctotarget -'")
         sys.exit(2)
     return options

@@ -1,0 +1,2 @@
+mosestokenizer==0.3.0
+openfile==0.0.2
