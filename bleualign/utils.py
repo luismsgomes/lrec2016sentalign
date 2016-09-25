@@ -33,7 +33,7 @@ def evaluate(options, testalign, goldalign, log_function):
     (tpstrict,fnstrict,tplax,fnlax) = recall((0,0),goldalign,[i[0] for i in testalign],log_function)
     results['recall'] = (tpstrict,fnstrict,tplax,fnlax)
 
-    for aligntype in set([i[1] for i in testalign]):
+    for aligntype in sorted(set([i[1] for i in testalign])): # bugfix: added sorted to ensure output is deterministic
         testalign_bytype = []
         for i in testalign:
             if i[1] == aligntype:

@@ -67,7 +67,7 @@ def tasks_producer(tasks,num_tasks,data):
     for i,task in enumerate(collect_article(*data)):
         num_tasks.value += 1
         tasks.put((i,task),True)
-        
+
     #poison pills
     for i in range(number_of_threads):
         tasks.put((None,None))
@@ -88,10 +88,10 @@ class Aligner:
         'srctotarget': [], 'targettosrc': [],
         #run aligner without srctotarget and targettosrc
         'no_translation_override':False,
-        
+
         #only consider target sentences for bleu-based alignment that are among top N alternatives for a given source sentence
         'maxalternatives':3,
-        
+
         #bleu scoring algorithm works with 4-grams by default. We got better results when using 2-grams (since there are less 0 scores then)
         'bleu_ngrams' : 2,
 
@@ -99,7 +99,7 @@ class Aligner:
         #also, there are potential precision issues.
         #set to 1 to disable bleu-based 1 to N alignments and let gale & church fill the gaps
         'Nto1' : 2,
-        
+
         #do only gale-church, no bleualign
         'galechurch': None,
 
@@ -118,15 +118,15 @@ class Aligner:
         #filterthreshold means choices the higher percentage of alignment
         #set filterlang True, whose when you want to filter alignemts which src is similar to target than translation
         'filter': None, 'filterthreshold': 90, 'filterlang': None,
-        
+
         #it will print unalignemt pair(zero to one or one to zero pair)
         'printempty': False,
-        
+
         #setting output for four output filenames, it will add suffixes automatically
         #or passing filenames or io object for them in respectly.
         #if not passing anything or assigning None, they will use StringIO to save results.
         'output': None,
-        'output-src': None, 'output-target': None,
+        'output-src': None, 'output-target': None, 'output-pairs': None,
         'output-src-bad': None, 'output-target-bad': None,
         #the best alignment of corpus for evaluation
         'eval': None,
@@ -137,16 +137,17 @@ class Aligner:
       self.src, self.target = None,None
       self.srctotarget, self.targettosrc= [],[]
       self.out1, self.out2, self.out_bad1, self.out_bad2 = None,None,None,None
+      self.pairs_out = None
       self.sources_out,self.targets_out = [],[]
       self.finalbleu = []
       self.bleualign = []
       self.close_src, self.close_target = False, False
       self.close_srctotarget, self.close_targettosrc = [], []
       self.close_out1, self.close_out2 = False, False
-      self.close_out_bad1, self.close_out_bad2 = False, False 
+      self.close_out_bad1, self.close_out_bad2 = False, False
       self.options = self.default_options.copy()
       self.options.update(options)
-      
+
       if not self.options['srcfile']:
         raise ValueError('Source file not specified.')
       if not self.options['targetfile']:
@@ -175,6 +176,8 @@ class Aligner:
             self.options['output-src'], self.options['output'], '-s')
       self.out2,self.close_out2=self._outputObjectFromParameter(
             self.options['output-target'], self.options['output'], '-t')
+      self.pairs_out,self.close_pairs_out=self._outputObjectFromParameter(
+            self.options['output-pairs'], self.options['output'], '.pairs')
 
       if self.options['filter']:
         self.out_bad1,self.close_out_bad1=self._outputObjectFromParameter(
@@ -198,7 +201,7 @@ class Aligner:
                 inputObject = self._stringArray2stringIo(parameter)
             close_object = False
         return inputObject, close_object
- 
+
     # parameter may be filename, IO object or string array
     def _outputObjectFromParameter(self, parameter, filename, suffix):
         close_object = False
@@ -216,7 +219,7 @@ class Aligner:
 
     #takes care of multiprocessing; calls process() function for each article
     def mainloop(self):
-      
+
       results = {}
 
       if multiprocessing_enabled:
@@ -237,7 +240,7 @@ class Aligner:
         i = 0
         #get results from processed and call printout function
         while i < num_tasks.value:
-            
+
             #wait till result #i is populated
             while True:
                 try:
@@ -274,7 +277,7 @@ class Aligner:
             if self.options['eval']:
                 self.log('evaluation ' + str(i))
                 results[i] = evaluate(self.options,self.multialign,self.options['eval'][i],self.log)
-            
+
             del(scores[i])
             i += 1
 
@@ -313,16 +316,16 @@ class Aligner:
     #results of alignment or good aligment if filtering
     def results(self):
         return self.out1,self.out2
-       
+
     #bad aligment for filtering. Otherwise, None
     def results_bad(self):
         return self.out_bad1,self.out_bad2
 
     #Start different alignment runs depending on which and how many translations are sent to program; intersect results.
     def process(self,sourcelist,targetlist,translist1,translist2):
-        
+
       multialign = []
-        
+
       phase1 = []
       phase2 = []
 
@@ -378,10 +381,10 @@ class Aligner:
           if pair in phase2mirror:
             phase3.append((pair,'INTERSECT: ' + t + ' - ' + phase2[phase2mirror.index(pair)][1]))
         multialign = phase3
-        
+
       elif phase1:
         multialign = phase1
-        
+
       elif phase2:
         multialign = [((j,k),t) for ((k,j),t) in phase2]
 
@@ -418,23 +421,23 @@ class Aligner:
    #use this if you want to implement your own similarity score
     def eval_sents_dummy(self,translist,targetlist):
       scoredict = {}
-      
+
       for testID,testSent in enumerate(translist):
         scores = []
-        
+
         for refID,refSent in enumerate(targetlist):
           score = 100-abs(len(testSent)-len(refSent)) #replace this with your own similarity score
           if score > 0:
             scores.append((score,refID,score))
         scoredict[testID] = sorted(scores,key=itemgetter(0),reverse=True)[:self.options['maxalternatives']]
-            
+
       return scoredict
 
 
     # given list of test sentences and list of reference sentences, calculate bleu scores
     #if you want to replace bleu with your own similarity measure, use eval_sents_dummy
     def eval_sents(self,translist,targetlist):
-      
+
       scoredict = {}
       cooked_test = {}
       cooked_test2 = {}
@@ -451,23 +454,23 @@ class Aligner:
         cooked_test["testlen"] = len(test_normalized)
         cooked_test["guess"] = [max(len(test_normalized)-k+1,0) for k in range(1,self.options['bleu_ngrams']+1)]
         counts = bleu.count_ngrams(test_normalized, self.options['bleu_ngrams'])
-        
+
         #separate by n-gram length. if we have no matching bigrams, we don't have to compare unigrams
         ngrams_sorted = dict([(x,set()) for x in range(self.options['bleu_ngrams'])])
         for ngram in counts:
             ngrams_sorted[len(ngram)-1].add(ngram)
-            
+
 
         for (refID,(reflens, refmaxcounts, refset)) in cooktarget:
-            
+
           ngrams_filtered = ngrams_sorted[self.options['bleu_ngrams']-1].intersection(refset)
-        
+
           if ngrams_filtered:
             cooked_test["reflen"] = reflens[0]
             cooked_test['correct'] = [0]*self.options['bleu_ngrams']
             for ngram in ngrams_filtered:
               cooked_test["correct"][self.options['bleu_ngrams']-1] += min(refmaxcounts[ngram], counts[ngram])
-            
+
             for order in range(self.options['bleu_ngrams']-1):
                 for ngram in ngrams_sorted[order].intersection(refset):
                     cooked_test["correct"][order] += min(refmaxcounts[ngram], counts[ngram])
@@ -479,7 +482,7 @@ class Aligner:
             logbleu /= self.options['bleu_ngrams']
             logbleu += min(0,1-float(cooked_test['reflen'])/cooked_test['testlen'])
             score = math.exp(logbleu)
-            
+
             if score > 0:
                 #calculate bleu score in reverse direction
                 cooked_test2["guess"] = [max(cooked_test['reflen']-k+1,0) for k in range(1,self.options['bleu_ngrams']+1)]
@@ -489,12 +492,12 @@ class Aligner:
                 logbleu /= self.options['bleu_ngrams']
                 logbleu += min(0,1-float(cooked_test['testlen'])/cooked_test['reflen'])
                 score2 = math.exp(logbleu)
-                
+
                 meanscore = (2*score*score2)/(score+score2)
                 scorelist.append((meanscore,refID,cooked_test['correct']))
-              
+
         scoredict[testID] = sorted(scorelist,key=itemgetter(0),reverse=True)[:self.options['maxalternatives']]
-        
+
       return scoredict
 
 
@@ -557,9 +560,9 @@ class Aligner:
     #find unaligned sentences and create work packets for gapfiller()
     #gapfiller() takes two sentence pairs and all unaligned sentences in between as arguments; gapfinder() extracts these.
     def gapfinder(self, translist, targetlist):
-      
+
       self.multialign = []
-      
+
       #find gaps: lastpair is considered pre-gap, pair is post-gap
       lastpair = ((),())
       src, target = None, None
@@ -594,7 +597,7 @@ class Aligner:
 
       if targetgap or sourcegap:
         lastpair = self.gapfiller(sourcegap, targetgap, lastpair, ((),()), translist, targetlist)
-      
+
       self.addtoAlignments(lastpair)
 
 
@@ -615,25 +618,25 @@ class Aligner:
         #concatenate all sentences in pregap alignment pair
         tmpstr =  ' '.join([targetlist[i] for i in pregap[1]])
         evaltarget.append((pregap[1],tmpstr))
-        
+
         #search will be pruned to this window
         if "bleu1to1" in self.options['gapfillheuristics']:
           window = 10 + self.options['Nto1']
         else:
           window = self.options['Nto1']
-        
+
         for src in [j for i,j in enumerate(sourcegap) if (i < window or len(sourcegap)-i <= window)]:
           Sent = translist[src]
           evalsrc.append(((src,),Sent))
-        
+
         for target in [j for i,j in enumerate(targetgap) if (i < window or len(targetgap)-i <= window)]:
           Sent = targetlist[target]
           evaltarget.append(((target,),Sent))
-        
+
         #concatenate all sentences in postgap alignment pair
         tmpstr =  ' '.join([translist[i] for i in postgap[0]])
         evalsrc.append((postgap[0],tmpstr))
-        
+
         #concatenate all sentences in postgap alignment pair
         tmpstr =  ' '.join([targetlist[i] for i in postgap[1]])
         evaltarget.append((postgap[1],tmpstr))
@@ -650,12 +653,12 @@ class Aligner:
           nTar[n] = self.createNSents(evaltarget,n)
         for n in range(2,self.options['Nto1']+1):
           evaltarget += nTar[n]
-        
+
         evalsrc_raw = [item[1] for item in evalsrc]
         evaltarget_raw = [item[1] for item in evaltarget]
-        
+
         scoredict_raw = self.eval_sents(evalsrc_raw,evaltarget_raw)
-        
+
         scoredict = {}
         for src,value in scoredict_raw.items():
             src = evalsrc[src][0]
@@ -672,14 +675,14 @@ class Aligner:
       while sourcegap or targetgap:
         pregapsrc,pregaptarget = pregap
         postgapsrc,postgaptarget = postgap
-          
+
         if sourcegap and self.options['Nto1'] > 1:
-          
+
           #try if concatenating source sentences together improves bleu score (beginning of gap)
           if pregapsrc:
             oldscore,oldtarget,oldcorrect = scoredict[pregapsrc][0]
             combinedID = tuple(list(pregapsrc)+[sourcegap[0]])
-            if combinedID in scoredict:
+            if combinedID in scoredict and len(scoredict[combinedID]): # bugfix: scoredict[combinedID] may be empty
                 newscore,newtarget,newcorrect = scoredict[combinedID][0]
 
                 if newscore > oldscore and newcorrect > oldcorrect and newtarget == pregaptarget:
@@ -687,12 +690,12 @@ class Aligner:
                     pregap = (combinedID,pregaptarget)
                     sourcegap.pop(0)
                     continue
-            
+
           #try if concatenating source sentences together improves bleu score (end of gap)
           if postgapsrc:
             oldscore,oldtarget,oldcorrect = scoredict[postgapsrc][0]
             combinedID = tuple([sourcegap[-1]] + list(postgapsrc))
-            if combinedID in scoredict:
+            if combinedID in scoredict and len(scoredict[combinedID]): # bugfix: scoredict[combinedID] may be empty
                 newscore,newtarget, newcorrect = scoredict[combinedID][0]
                 if newscore > oldscore  and newcorrect > oldcorrect and newtarget == postgaptarget:
                     #print('\nsource side: ' + str(combinedID) + ' better than ' + str(postgapsrc))
@@ -701,7 +704,7 @@ class Aligner:
                     continue
 
         if targetgap and self.options['Nto1'] > 1:
-          
+
           #try if concatenating target sentences together improves bleu score (beginning of gap)
           if pregapsrc:
             newscore,newtarget,newcorrect = scoredict[pregapsrc][0]
@@ -723,7 +726,7 @@ class Aligner:
                   if i in targetgap:
                     del(targetgap[targetgap.index(i)])
                 continue
-        
+
         #concatenation didn't help, and we still have possible one-to-one alignments
         if sourcegap and targetgap:
 
@@ -746,23 +749,23 @@ class Aligner:
             tempsrcgap = []
             for src in sourcegap:
               tempsrcgap.append((src,translist[src]))
-            
+
             temptargetgap = []
             for target in targetgap:
               temptargetgap.append((target,targetlist[target]))
 
-              
+
             churchaligns = self.gale_church(tempsrcgap,temptargetgap)
 
             for src,target in churchaligns:
               self.addtoAlignments((src,target),'GALECHURCH')
             break
-         
+
           #no valid gapfiller left. break loop and ignore remaining gap
           break
-      
+
         break
-        
+
       if not pregap in [i[0] for i in self.multialign]:
         self.addtoAlignments(pregap)
       return postgap
@@ -775,7 +778,7 @@ class Aligner:
       #get sentence lengths in characters
       srclengths = [[len(i[1].strip()) for i in tempsrcgap]]
       targetlengths = [[len(i[1].strip()) for i in temptargetgap]]
-      
+
       #call gale & church algorithm
       pairs = sorted(list((align_texts(srclengths, targetlengths)[0])), key=itemgetter(0))
 
@@ -836,22 +839,22 @@ class Aligner:
           targetID.append(temptargetgap[target][0])
         #print('\nChurch & Gale: ' + str(tuple(srcID)) + ' to ' + str(tuple(targetID)))
         outpairs.append((tuple(srcID),tuple(targetID)))
-        
+
       return outpairs
 
 
     #get a list of (ID,Sentence) tuples and generate bi- or tri-sentence tuples
     def createNSents(self,l,n=2):
-      
+
       out = []
-      
+
       for i in range(len(l)-n+1):
         IDs = tuple([k for sublist in l[i:i+n] for k in sublist[0]])
         Sents = " ".join([k[1] for k in l[i:i+n]])
         out.append((IDs,Sents))
-      
+
       return out
-          
+
 
     def addtoAlignments(self,pair,aligntype=None):
       if not (pair[0] and pair[1]):
@@ -911,6 +914,9 @@ class Aligner:
       sentscores = {}
       lastsrc,lasttarget = 0,0
       for j,(src,target) in enumerate([i[0] for i in self.multialign]):
+        self.pairs_out.write(
+            " ".join(map(str, src)) + " ; " + " ".join(map(str, target)) + "\n"
+        )
 
         if self.options['printempty']:
             if src[0] != lastsrc + 1:
@@ -1026,24 +1032,24 @@ class Aligner:
 
     #filter bad sentence pairs / article pairs
     def write_filtered(self):
-      
+
       self.finalbleu = sorted(self.finalbleu,key=itemgetter(0),reverse=True)
       self.log(self.finalbleu,2)
-      
+
       totallength=0
       totalscore=0
-      
+
       for (articlescore,articlescore2,before,after) in self.finalbleu:
         length = after-before
         totallength += length
         totalscore += articlescore*length
-        
+
       averagescore = totalscore/totallength
       self.log("The average BLEU score is: " + str(averagescore),1)
-      
+
       goodlength = totallength*self.options['filterthreshold']/float(100)
       totallength = 0
-      
+
       bad_percentiles = []
       for i,(articlescore,articlescore2,before,after) in enumerate(self.finalbleu):
         length = after-before
@@ -1088,6 +1094,8 @@ class Aligner:
             self.out1.close()
         if self.close_out2:
             self.out2.close()
+        if self.close_pairs_out:
+            self.pairs_out.close()
         if self.close_out_bad1:
             self.out_bad1.close()
         if self.close_out_bad2:
@@ -1119,7 +1127,7 @@ if multiprocessing_enabled:
       self.scoredict = None
 
     def run(self):
-      
+
       i,data = self.tasks.get()
       while i != None:
 
@@ -1127,5 +1135,5 @@ if multiprocessing_enabled:
         sourcelist,targetlist,translist1,translist2 = data
         self.multialign = self.process(sourcelist,targetlist,translist1,translist2)
         self.scores[i] = (data,self.multialign,self.bleualign,self.scoredict)
-        
+
         i,data = self.tasks.get()
